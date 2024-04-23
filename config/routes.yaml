@@ -5,3 +5,7 @@ controllers:
 kernel:
     resource: ../src/Kernel.php
     type: annotation
+
+landing_page:
+    path: /
+    controller: App\Controller\LandingController::index

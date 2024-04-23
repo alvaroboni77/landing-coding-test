@@ -1,0 +1,8 @@
+{% block body %}
+    <h1>Listado de productos</h1>
+    <ul>
+        {% for product in products %}
+            <li>ID: {{ product.id }}<br>ASIN: {{ product.asin }}<br>Titulo: {{ product.title }}</li>
+        {% endfor %}
+    </ul>
+{% endblock %}
