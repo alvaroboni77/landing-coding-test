@@ -8,6 +8,8 @@ RUN apt update \
     && pecl install mongodb \
     && docker-php-ext-enable mongodb
 
+COPY ./php.ini /etc/php/php.ini
+
 WORKDIR /var/www/landing-coding-test
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
