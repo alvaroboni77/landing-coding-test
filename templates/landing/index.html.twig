@@ -1,8 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Las 10 mejores barras de sonido en España{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+	<link rel="stylesheet" href="{{ asset('assets/css/landing.css') }}">
+{% endblock %}
+
 {% block body %}
-    <h1>Listado de productos</h1>
-    <ul>
-        {% for product in products %}
-            <li>ID: {{ product.id }}<br>ASIN: {{ product.asin }}<br>Titulo: {{ product.title }}</li>
-        {% endfor %}
-    </ul>
+    <div class="container bg-light p-4">
+        <h1>Las 10 mejores barras de sonido en España</h1>
+        <table class="table table-border">
+            {% include 'landing/table_header.html.twig' %}
+            <tbody class="table-bordered">
+                {% include 'landing/product_row.html.twig' %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('assets/js/landing.js') }}"></script>
 {% endblock %}

@@ -1,0 +1,54 @@
+{% for product in products %}
+    <tr class="bckgrnd-white">
+        <td>
+            <img src="{{ product.imageUrl }}" class="img-fluid">
+        </td>
+        <td class="cntr-align">
+            <div>
+                <span class="rating-number">9.9</span><br>
+                <span class="text-primary">Excepcional</span>
+            </div>
+        </td>
+        <td>
+            <div class="limited-text mt-2 mb-3 font-weight-bold">
+                {{ product.title }}
+            </div>
+            <p class="text-secondary">{{ product.brand }}</p>
+            <div>
+                <span class="border border-dark rounded p-1 mr-2">{{ product.discount }}% Descuento</span>
+                {% if product.isFreeShippingEligible %}
+                    <span class="border border-dark rounded p-1">Envío gratis</span>
+                {% endif %}
+            </div>
+            <button class="btn btn-link btn-sm show-more mt-3" data-target="#text-{{ product.id }}">
+                Mostrar más<i class="fas fa-angle-down ml-1"></i>
+            </button>
+            <button class="btn btn-link btn-sm show-less mt-3" data-target="#text-{{ product.id }}" style="display: none;">
+                Mostrar menos <i class="fas fa-angle-up"></i>
+            </button>
+        </td>
+        <td class="cntr-align">
+            <div>
+                <button type="button" class="btn btn-warning buy-btn">Comprar ahora<i class="fa-solid fa-angle-right ml-1"></i></button>
+                <img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg" class="amazon-img mt-3">
+            </div>
+        </td>
+    </tr>
+    <tr id="text-{{ product.id }}" class="tr-features">
+        <td colspan="3" class="border-right-0">
+            <div>
+                <ul>
+                    {% for feature in product.features %}
+                        <li>{{ feature }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </td>
+        <td class="bttm-align">
+            <div>
+                <img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg" class="amazon-img mb-3">
+                <button type="button" class="btn btn-warning buy-btn">Comprar ahora<i class="fa-solid fa-angle-right ml-1"></i></button>
+            </div>
+        </td>
+    </tr>
+{% endfor %}

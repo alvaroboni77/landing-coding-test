@@ -1,0 +1,53 @@
+.table-border {
+    border-collapse: separate;
+    border-spacing: 0 20px;
+}
+
+.cntr-align {
+    text-align: center;
+    vertical-align: middle !important;
+}
+
+.cntr-align div {
+    display: inline-block;
+}
+
+.bttm-align {
+    text-align: center;
+    vertical-align: bottom !important;
+}
+
+.bttm-align div {
+    display: inline-block;
+}
+
+.rating-number {
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+.limited-text {
+    overflow: hidden; 
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+.bckgrnd-white{
+    background: #ffffff;
+}
+
+.tr-features{
+    display: none;
+    background: #ffffff;
+}
+
+.buy-btn{
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 12px;
+}
+
+.amazon-img{
+    max-width: 70%;
+}
