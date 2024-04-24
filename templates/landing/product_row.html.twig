@@ -1,6 +1,7 @@
 {% for product in products %}
-    <tr class="bckgrnd-white">
-        <td>
+    <tr class="tr-product">
+        <td class="product-col">
+            <span class="sales-rank-span">#{{ loop.index }}</span>
             <img src="{{ product.imageUrl }}" class="img-fluid">
         </td>
         <td class="cntr-align">
@@ -35,7 +36,7 @@
         </td>
     </tr>
     <tr id="text-{{ product.id }}" class="tr-features">
-        <td colspan="3" class="border-right-0">
+        <td colspan="3" class="td-features">
             <div>
                 <ul>
                     {% for feature in product.features %}

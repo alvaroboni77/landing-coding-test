@@ -1,8 +1,3 @@
-.table-border {
-    border-collapse: separate;
-    border-spacing: 0 20px;
-}
-
 .cntr-align {
     text-align: center;
     vertical-align: middle !important;
@@ -33,13 +28,13 @@
     -webkit-box-orient: vertical;
 }
 
-.bckgrnd-white{
-    background: #ffffff;
-}
-
 .tr-features{
     display: none;
     background: #ffffff;
+}
+
+.td-features{
+    border-right: hidden !important;
 }
 
 .buy-btn{
@@ -50,4 +45,22 @@
 
 .amazon-img{
     max-width: 70%;
+}
+
+.sales-rank-span{
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: #cececea3;
+    padding: 0 3px;
+    font-weight: 700;
+}
+
+.product-col{
+    position: relative;
+}
+
+.tr-product{
+    background: #ffffff;
+    border-top: 20px solid #f8f9fa;
 }

@@ -15,7 +15,9 @@ class LandingController extends AbstractController
 
     public function index():Response
     {
-        $products = $this->documentManager->getRepository(Product::class)->findAll();
+        $products = $this->documentManager->getRepository(Product::class)->createQueryBuilder()
+            ->sort('salesRank', 'ASC')
+            ->getQuery()->execute();
 
         return $this->render('landing/index.html.twig', [
             'products' => $products
