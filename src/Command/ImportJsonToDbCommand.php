@@ -11,8 +11,6 @@ use Symfony\Component\Console\Input\InputArgument;
 
 class ImportJsonToDbCommand extends Command
 {
-    private const DEFAULT_JSON_URL  = 'https://file.notion.so/f/f/5f4961f1-3ce8-4cbb-9a67-ec3baf081ee7/1ed10d1f-fd07-4cfd-9c23-35d3d765ffd5/amazon.json?id=6b00230f-b9c5-4cf0-97ee-3a954baa361b&table=block&spaceId=5f4961f1-3ce8-4cbb-9a67-ec3baf081ee7&expirationTimestamp=1713952800000&signature=GpKzbCEqwVyJZ5dkN-zhLmvB9D6FVUkRhYCPY-LTMLM&downloadName=amazon.json';
-
     public function __construct(private DocumentManager $documentManager)
     {
         parent::__construct();
@@ -22,7 +20,7 @@ class ImportJsonToDbCommand extends Command
     {
         $this->setName('app:import-json-to-db')
             ->setDescription('Import json and stores it in DB')
-            ->addArgument('url', InputArgument::OPTIONAL, 'URL of the JSON file', self::DEFAULT_JSON_URL);
+            ->addArgument('url', InputArgument::REQUIRED, 'URL of the JSON file');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output):int
