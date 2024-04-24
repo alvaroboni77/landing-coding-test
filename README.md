@@ -1,10 +1,11 @@
 # Landing coding test
+Este proyecto consta de una landing que muestra un listado de productos de Amazon. Dispone de un comando que procesa los datos de un fichero json y los guarda en una base de datos MongoDB. 
 
 Pasos a seguir para probar el proyecto:
 
 #### 1. Levantar contenedores Docker
 
-Ejecutar el siguiente comando en el directorio `*docker/*` de la raíz del proyecto para levantar los contenedores Docker:
+Ejecutar el siguiente comando en el directorio *`docker/`* de la raíz del proyecto para levantar los contenedores Docker:
 
 ```bash
 docker-compose up -d --build
@@ -21,9 +22,7 @@ Si se intenta acceder al proyecto sin haber cargado datos en la base de datos, s
 
 Para cargar los productos, se debe ejecutar el siguiente comando:
 ```bash
-php bin/console app:import-json-to-db <url>
+php bin/console app:import-json-to-db
 ```
-El argumento obligatorio `url` es la URL del fichero JSON.
-> **_IMPORTANTE:_** la url del json debe ir entre comillas para garantizar que se pasa correctamente como un solo argumento, sin importar los caracteres especiales que pueda contener.
-
 Una vez ejecutado correctamente el comando, se podrá visualizar la landing.
+> **NOTA:_** el fichero json se encuentra situado en el directorio *`src/Data/`*.

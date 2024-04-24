@@ -11,6 +11,8 @@ use Symfony\Component\Console\Input\InputArgument;
 
 class ImportJsonToDbCommand extends Command
 {
+    private const JSON_FILE_PATH = __DIR__ . '/../Data/amazon.json';
+
     public function __construct(private DocumentManager $documentManager)
     {
         parent::__construct();
@@ -19,16 +21,13 @@ class ImportJsonToDbCommand extends Command
     protected function configure()
     {
         $this->setName('app:import-json-to-db')
-            ->setDescription('Import json and stores it in DB')
-            ->addArgument('url', InputArgument::REQUIRED, 'URL of the JSON file');
+            ->setDescription('Import json and stores it in DB');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output):int
     {
-        $jsonUrl = $input->getArgument('url');
-
         try {
-            $data = $this->fetchAndDecodeJson($jsonUrl);
+            $data = $this->fetchAndDecodeJson(self::JSON_FILE_PATH);
             $this->processProducts($data);
             $this->documentManager->flush();
             $output->writeln('Data successfully saved.');
