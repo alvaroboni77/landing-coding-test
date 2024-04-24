@@ -31,7 +31,7 @@ class ImportJsonToDbCommand extends Command
             $data = $this->fetchAndDecodeJson($jsonUrl);
             $this->processProducts($data);
             $this->documentManager->flush();
-            $output->writeln('Data successfully saved in MongoDB.');
+            $output->writeln('Data successfully saved.');
 
             return Command::SUCCESS;
         } catch (\Exception $e) {
