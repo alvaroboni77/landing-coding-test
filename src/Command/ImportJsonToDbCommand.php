@@ -7,6 +7,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use App\Document\Product;
 use Doctrine\ODM\MongoDB\DocumentManager;
+use Symfony\Component\Console\Input\InputArgument;
 
 class ImportJsonToDbCommand extends Command
 {
@@ -20,22 +21,24 @@ class ImportJsonToDbCommand extends Command
     protected function configure()
     {
         $this->setName('app:import-json-to-db')
-            ->setDescription('Import json and stores it in DB');
+            ->setDescription('Import json and stores it in DB')
+            ->addArgument('url', InputArgument::OPTIONAL, 'URL of the JSON file', self::DEFAULT_JSON_URL);
     }
 
     protected function execute(InputInterface $input, OutputInterface $output):int
     {
+        $jsonUrl = $input->getArgument('url');
+
         try {
-            $data = $this->fetchAndDecodeJson(self::DEFAULT_JSON_URL);
-
+            $data = $this->fetchAndDecodeJson($jsonUrl);
             $this->processProducts($data);
-
             $this->documentManager->flush();
-
             $output->writeln('Data successfully saved in MongoDB.');
+
             return Command::SUCCESS;
         } catch (\Exception $e) {
             $output->writeln('Error importing data: ' . $e->getMessage());
+            
             return Command::FAILURE;
         }
     }
