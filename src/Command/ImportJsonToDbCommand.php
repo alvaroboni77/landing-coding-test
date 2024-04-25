@@ -6,6 +6,9 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use App\Document\Product;
+use App\Exception\DecodeJsonException;
+use App\Exception\FetchJsonException;
+use App\Service\ProductService;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Symfony\Component\Console\Input\InputArgument;
 
@@ -13,7 +16,7 @@ class ImportJsonToDbCommand extends Command
 {
     private const JSON_FILE_PATH = __DIR__ . '/../Data/amazon.json';
 
-    public function __construct(private DocumentManager $documentManager)
+    public function __construct(private ProductService $productService)
     {
         parent::__construct();
     }
@@ -29,7 +32,6 @@ class ImportJsonToDbCommand extends Command
         try {
             $data = $this->fetchAndDecodeJson(self::JSON_FILE_PATH);
             $this->processProducts($data);
-            $this->documentManager->flush();
             $output->writeln('Data successfully saved.');
 
             return Command::SUCCESS;
@@ -44,12 +46,12 @@ class ImportJsonToDbCommand extends Command
     {
         $json = file_get_contents($url);
         if ($json === false) {
-            throw new \Exception('Failed to fetch JSON from URL');
+            throw new FetchJsonException();
         }
 
         $data = json_decode($json, true);
         if ($data === null) {
-            throw new \Exception('Error decoding JSON');
+            throw new DecodeJsonException();
         }
 
         return $data;
@@ -59,15 +61,10 @@ class ImportJsonToDbCommand extends Command
     {
         foreach ($data['SearchResult']['Items'] as $item) {
             $asin = $item['ASIN'];
-            if (!$this->productExists($asin)) {
+            if (!$this->productService->productExists($asin)) {
                 $this->importProduct($item);
             }
         }
-    }
-
-    private function productExists(string $asin): bool
-    {
-        return $this->documentManager->getRepository(Product::class)->findOneBy(['asin' => $asin]) !== null;
     }
 
     private function importProduct(array $item): void
@@ -83,6 +80,6 @@ class ImportJsonToDbCommand extends Command
         $product->setDiscount($item['Offers']['Listings'][0]['Price']['Savings']['Percentage']);
         $product->setSalesRank($item['BrowseNodeInfo']['BrowseNodes'][0]['SalesRank']);
 
-        $this->documentManager->persist($product);
+        $this->productService->saveProduct($product);
     }
 }

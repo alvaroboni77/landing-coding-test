@@ -3,22 +3,23 @@
 namespace App\Controller;
 
 use App\Document\Product;
-use Doctrine\ODM\MongoDB\DocumentManager;
+use App\Exception\EmptyProductListException;
+use App\Service\ProductService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 
 class LandingController extends AbstractController
 {
-    public function __construct(private DocumentManager $documentManager)
+    public function __construct(private ProductService $productService)
     {
     }
 
     public function index():Response
     {
         try {
-            $products = $this->getSortedProducts();
+            $products = $this->productService->getSortedProducts();
             if (empty($products)) {
-                throw new \Exception('No products found.');
+                throw new EmptyProductListException();
             }
         } catch (\Exception $e) {
             return $this->render('landing/error.html.twig', [
@@ -29,15 +30,5 @@ class LandingController extends AbstractController
         return $this->render('landing/index.html.twig', [
             'products' => $products
         ]);
-    }
-
-    private function getSortedProducts(): array
-    {
-        return $this->documentManager->getRepository(Product::class)
-            ->createQueryBuilder()
-            ->sort('salesRank', 'ASC')
-            ->getQuery()
-            ->execute()
-            ->toArray();
     }
 }
